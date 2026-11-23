@@ -63,7 +63,10 @@ async function bootstrapCurriculum(){
 }
 let db=load(),view='home',detail='reading',running=false,quizSelection={},labCoef=1,interactiveValue=1,activityAnswers={},filter='all',search='',noticeTimer;
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const save=()=>{localStorage.setItem(STORAGE,JSON.stringify(db))};
+const save=()=>{
+ try{localStorage.setItem(STORAGE,JSON.stringify(db))}
+ catch(e){notify('مساحة التخزين المحلي امتلأت! صدّر نسخة احتياطية أو احذف محتوى قديم.');console.error('Storage quota exceeded',e)}
+};
 const course=()=>db.courses.find(c=>c.id===db.activeCourse)||db.courses[0];
 const lesson=()=>course()?.lessons?.find(x=>x.id===db.activeLesson)||course()?.lessons?.[0];
 function notify(msg){const e=$('#toast');if(!e)return;e.textContent=msg;e.style.display='block';clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>e.style.display='none',4500)}
@@ -179,22 +182,27 @@ async function gemini(prompt,mode='standard'){
  catch{throw Error('Gemini رجع JSON غير مكتمل أو غير صالح. لم نستبدل المحتوى القديم.')}
 }
 function promptFor(key,l,c){
- const m=lessonMetadata(l),lab=m.lab;
- const courseName=c.title,lessonName=m.title||l.title;
- const base=`أنت مدرس جامعي متخصص في ${courseName}. اسم الطالب ميسي؛ نادِه باسمه بشكل طبيعي عند الحاجة، من غير تكرار. الشرح بالمصري الواضح والمصطلح الإنجليزي عند الحاجة مع تعريفه بالعربي، من غير حشو أو ترحيب متكرر.\nالمادة: ${courseName}\nالمحاضرة: ${lessonName}\n`;
- const integrity='الأولوية القصوى للدقة العلمية والتقنية. راجع داخليًا كل تعريف وقانون وأمر ومثال ونتيجته قبل الرد. لا تخمّن ولا تؤكد معلومة غير متيقن منها. فرّق بين التبسيط المفيد والحقيقة، ولا تستخدم تبسيطًا مضللًا. خليك داخل مستوى وهدف المادة؛ لا تتوسع في تخصصات أخرى إلا للضرورة. اشرح أي مصطلح جديد قبل استخدامه، أو اربطه بتعريف سبق شرحه بالفعل في نفس المحاضرة. التدرّج يكون من الأساسيات إلى الفهم العملي، مع توضيح كيف ولماذا، لا تعريفات متراكمة. افحص اتساق الأجزاء قبل إخراج JSON. ';
+ const courseName=c.title;
+ const lessonName=l.title;
+ const lessons=(c.lessons||[]).filter(x=>!x.legacyOverview);
+ const idx=lessons.findIndex(x=>x.id===l.id);
+ const prevTitle=idx>0?lessons[idx-1].title:'';
+ const nextTitle=idx>=0&&idx<lessons.length-1?lessons[idx+1].title:'';
+ const contextLine=(prevTitle||nextTitle)?`السياق داخل المقرر: ${prevTitle?`الدرس السابق كان «${prevTitle}»`:'بداية المقرر'}${nextTitle?`، والدرس التالي سيكون «${nextTitle}»`:''}.\n`:'';
+ const base=`أنت أستاذ جامعي متخصص في ${courseName}. اسم الطالب ميسي؛ نادِه باسمه بشكل طبيعي عند الحاجة، من غير تكرار. الشرح بالمصري الواضح والمصطلح الإنجليزي عند الحاجة مع تعريفه، من غير حشو أو ترحيب متكرر.\nالمادة: ${courseName}\nالمحاضرة: ${lessonName}\n${contextLine}`;
+ const integrity='الأولوية القصوى للدقة العلمية والتقنية. راجع داخليًا كل تعريف وقانون وأمر ومثال ونتيجته قبل الرد. لا تخمّن ولا تستخدم تبسيطًا مضللًا. اشرح أي مصطلح جديد قبل استخدامه. ';
+ const sandboxRules='شروط تقنية إلزامية لحقل html: أرجع محتوى الـ body فقط (<div>...</div><style>...</style><script>...</script>) بدون <!doctype> أو <html> أو <head> أو <meta> أو <link> أو <iframe> أو <form> أو <base>. ممنوع نهائيًا استخدام onclick أو oninput أو أي معالج أحداث داخل وسوم HTML؛ اربط كل الأحداث باستخدام addEventListener داخل <script> فقط. لا تستخدم fetch أو import أو أي مكتبات أو روابط خارجية.';
  switch(key){
- case 'reading':return base+integrity+`المطلوب محاضرة تعليمية كاملة للتعلم الذاتي، وليست ملخصًا أو قاموس مصطلحات. اعتمد على عنوان المادة وعنوان المحاضرة في تحديد النطاق الدقيق. تصرف كمدرس يعلّم طالبًا يبدأ من الصفر: قدّم الفكرة التي تحل مشكلة حقيقية، ثم ابنِ كل مفهوم لازم لفهمها قبل استعماله، واشرح ماذا يحدث وكيف ولماذا، خطوة بخطوة وبالقدر المناسب للتخصص. لا تنتقل لمفهوم جديد قبل توضيح العلاقة بالمفهوم السابق. اعرض مثالًا تطبيقيًا متصلًا يبدأ بحالة أولية، ثم خطوات وتغييرات يمكن تتبعها، ثم نتائج صحيحة وسبب كل نتيجة؛ وأضف مثالًا ثانيًا مختلفًا يختبر حالة مهمة أو خطأ شائع. لو المادة برمجية، قدم أوامر أو شيفرة واقعية بترتيب تنفيذي صحيح، وبيّن الحالة قبل وبعد كل أمر مؤثر؛ ولو فيها قوانين، وضّح معنى الرموز والحسابات ووحداتها. لا تختلق تفاصيل أو نتائج غير مؤكدة، ولا تَخلِط الممارسات المستحسنة بالشروط التقنية الإلزامية. ارجع لأي أساس يحتاجه الفهم من غير حشو، ولا تتوسع في تخصص جانبي لا يخدم الدرس. لا تبدأ بتحية، ولا تتكرر في مخاطبة الطالب باسمه. يجب أن يخرج المتعلم بفهم يتيح له تطبيق الفكرة بنفسه، لا بحفظ تعريفاتها. اكتب أقسامًا مترابطة ذات فقرات تفسيرية كافية، واسمح بالتفصيل الضروري؛ لا تحاول اختصار الشرح لمجرد أن المخرجات JSON. راجع صحة الأمثلة وتسلسلها قبل الإخراج. JSON فقط بالشكل: {"title":"...","blocks":[{"heading":"...","paragraphs":["فقرة تفسيرية مكتملة","فقرة تالية عند الحاجة"],"example":"مثال متدرج صحيح ونتيجته"}],"concepts":["..."]}.`;
- case 'interactive':return base+integrity+'ولّد من 2 إلى 4 أنشطة تفاعلية متدرجة تخص موضوع المحاضرة، تتضمن التوقع/التجربة/اكتشاف الخطأ، وتصحيح فوري مفسّر بناءً على إجابة الطالب. أرجع JSON فقط: {"kind":"generated_html","title":"...","description":"...","html":"<div>...</div><script>...</script>"}. حقل html يحتوي HTML/CSS/JavaScript كاملين ومكتفيين ذاتيًا بدون أي مكتبة أو اتصال بالإنترنت. يجب أن توجد مدخلات فعلية، وتحقق من الإجابات بكتابة منطق JavaScript صحيح، مع تغذية راجعة فورية وتعليل. اختبر داخليًا الحلول وحالات الخطأ. الأنشطة متناسبة مع المستوى ولا تعتمد على مصطلح غير مؤسس. لو النشاط برمجي، اعرض كودًا واضحًا وتحقق من النواتج المتوقعة. لا تضع بيانات خارجية أو روابط ولا تستعمل fetch أو import أو أي طلب صلاحية.';
- case 'lab':{
-  if(lab?.model==='electrostatic_charge_transfer')return base+integrity+'المحاكي التفاعلي المتاح للتنفيذ في التطبيق هو نقل الشحنة بين جسمين. أنشئ له عنوانًا ووصفًا علميين صحيحين وفق المحاضرة. JSON فقط: {"kind":"electrostatic_charge_transfer","title":"...","description":"..."}.';
-  if(/derivative|quadratic/i.test(lab?.model||''))return base+integrity+'المحاكي المتاح للمشتقة التربيعية. JSON فقط: {"kind":"derivative_quadratic","title":"...","description":"..."}.';
-  const task=lab?.task||`ابنِ مختبرًا تفاعليًا يساعد على اكتشاف فكرة ${lessonName} من خلال التجربة.`;
-  const controls=(lab?.learnerControls||[]).join('، '),results=(lab?.observableResults||[]).join('، ');
-  return base+integrity+`أنشئ مختبرًا تفاعليًا حقيقيًا لهذا الدرس قابلًا للتشغيل بدون أي مكتبات أو شبكة. المهمة: ${task}. ${controls?'التحكم المطلوب: '+controls+'.':''} ${results?'النتائج المرصودة: '+results+'.':''} أعد JSON واحدًا: {"kind":"generated_html","title":"...","description":"...","html":"<!doctype html>..."}. يجب أن تحتوي html على صفحة HTML كاملة وCSS وJavaScript مضمن، وفيها عناصر تحكم تغيّر حالة نموذج علمي/تقني بشكل فوري، نتائج قابلة للملاحظة وفحص توقعات الطالب، وتعليمات مختصرة. استعمل HTML/CSS/JS القياسية فقط؛ لا fetch ولا import ولا مكتبات أو روابط أو موارد خارجية. تجنب أي طلب صلاحيات. لا تكتفِ بنص أو أسئلة اختيار؛ المختبر لازم يحسب أو يحاكي الحالة ويتحدث عند تغيير المدخلات. لا تدّعِ تنفيذ نظام حقيقي إذا كانت المحاكاة مبسطة؛ وضح حدود النموذج. لو طبيعة الدرس لا تسمح بمحاكاة مفيدة فأعد {"kind":"none","title":"لا يحتاج مختبرًا","description":"سبب محدد"}. JSON فقط.`;
- }
- case 'quiz':return base+integrity+'أنشئ 8 أسئلة تقيس الفهم والتطبيق في هذه المحاضرة، بإجابات صحيحة وتفسير واضح لكل إجابة. أعد JSON فقط: {"title":"...","questions":[{"question":"...","options":["...","...","...","..."],"correctIndex":0,"explanation":"..."}]}.';
- default:throw Error('نوع توليد غير معروف');
+  case 'reading':return base+integrity+`المطلوب محاضرة تعليمية كاملة ومسترسلة للتعلم الذاتي، وليست ملخصًا أو نقاطًا جافة. ابنِ المحاضرة تلقائيًا من فهمك العميق للمادة وعنوان الحصة وسياقها: ابدأ بالمشكلة الحقيقية التي يحلها هذا الموضوع، ثم تدرّج من الأساسيات إلى الفهم العملي بفقرات مترابطة ومسترسلة توضح ماذا يحدث وكيف ولماذا. لا تنتقل لمفهوم جديد قبل توضيح علاقته بما سبقه. اعرض مثالًا تطبيقيًا متصلًا يبدأ بحالة أولية ويتتبع الخطوات والتغييرات والنتائج وسبب كل نتيجة، وأضف مثالًا ثانيًا مختلفًا يختبر حالة حدية أو خطأ شائع. لو المادة برمجية قدّم شيفرة أو أوامر واقعية بترتيب تنفيذي صحيح وبيّن الحالة قبل وبعد؛ ولو فيها قوانين وضّح معنى الرموز والحسابات ووحداتها. اكتب بتفصيل كافٍ ومسترسل دون اختصار. JSON فقط بالشكل: {"title":"...","blocks":[{"heading":"...","paragraphs":["فقرة تفسيرية مسترسلة ومكتملة","فقرة تالية متصلة بها"],"example":"مثال متدرج صحيح ونتيجته"}],"concepts":["..."]}.`;
+  case 'interactive':return base+integrity+`صمّم تلقائيًا من 2 إلى 4 أنشطة تفاعلية متدرجة تناسب موضوع «${lessonName}» (توقع النتيجة، تجربة، اكتشاف خطأ) مع تصحيح فوري مفسّر بناءً على إجابة الطالب. ${sandboxRules} أرجع JSON فقط: {"kind":"generated_html","title":"...","description":"...","html":"<div>...</div><style>...</style><script>...</script>"}.`;
+  case 'lab':{
+   const m=lessonMetadata(l);
+   if(m.lab?.model==='electrostatic_charge_transfer')return base+integrity+'المحاكي المتاح هو نقل الشحنة بين جسمين. أنشئ له عنوانًا ووصفًا علميين صحيحين وفق المحاضرة. JSON فقط: {"kind":"electrostatic_charge_transfer","title":"...","description":"..."}.';
+   if(/derivative|quadratic/i.test(m.lab?.model||''))return base+integrity+'المحاكي المتاح للمشتقة التربيعية. JSON فقط: {"kind":"derivative_quadratic","title":"...","description":"..."}.';
+   return base+integrity+`صمّم تلقائيًا مختبرًا أو محاكيًا تفاعليًا حقيقيًا يناسب «${lessonName}» في مادة «${courseName}» ويساعد الطالب على اكتشاف الفكرة بالتجربة العملية. يجب أن يحتوي على عناصر تحكم (أزرار/منزلقات/مدخلات) تغيّر حالة النموذج العلمي أو البرمجي فوريًا مع عرض مرئي واضح للنتائج (Canvas أو SVG أو DOM تفاعلي) وتعليمات مختصرة. لا تكتفِ بنص أو أسئلة اختيار؛ المختبر لازم يحاكي أو يحسب الحالة فعليًا ويتحدث عند تغيير المدخلات. ${sandboxRules} لو طبيعة الدرس نظرية بحتة ولا تسمح بمحاكاة مفيدة أعد {"kind":"none","title":"لا يحتاج مختبرًا","description":"سبب محدد"}. JSON فقط بالشكل: {"kind":"generated_html","title":"...","description":"...","html":"<div>...</div><style>...</style><script>...</script>"}.`;
+  }
+  case 'quiz':return base+integrity+'أنشئ 8 أسئلة تقيس الفهم والتطبيق العملي في هذه المحاضرة، بإجابات صحيحة وتفسير واضح لكل إجابة. أعد JSON فقط: {"title":"...","questions":[{"question":"...","options":["...","...","...","..."],"correctIndex":0,"explanation":"..."}]}.';
+  default:throw Error('نوع توليد غير معروف');
  }
 }
 function readingQualityWarnings(data){
