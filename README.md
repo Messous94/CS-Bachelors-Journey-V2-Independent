@@ -47,3 +47,12 @@ Standalone mobile-first PWA project. This is **not** built on, nor does it fetch
 ## Data safety
 
 Never publish Gemini API keys or GitHub PATs. Do not grant the token access to the original project; keep V2 syncing to its own private data repository. `localStorage` alone is not a cross-device sync mechanism. A full backend is recommended for safe automatic sync.
+
+
+## تحديث V2.1
+- ما اتغيرش مفتاح localStorage أو version=2 عشان الدروس السابقة وحالة CS101 يفضلوا موجودين.
+- التفاعل بيدعم اختيار متعدد، اكتشاف خطأ، ترتيب خطوات، وSlider ويحفظ الإجابات.
+- المختبر بيدعم منحنى دالة تربيعية ومماس وقاطع وقيم عددية متغيرة؛ الأنواع الأخرى بتظهر رسالة واضحة بدل تشغيل كود غير موثوق.
+- نموذج البيانات القديمة في الدروس باقٍ صالحًا للعرض. لإظهار نوع مختبر المشتقة الجديد في درس متولد من قبل، أعد توليد المختبر فقط (بعد تصدير نسخة احتياطية).
+- توليد Gemini حي يحتاج مفتاح صالح وحصة فعلية، ولم يتم اختباره عبر API المستخدم في بيئة التطوير.
+- تجنب التحديث من نافذة بها بيانات غير محفوظة، وصدّر نسخة احتياطية قبل استبدال ملفات النشر.
