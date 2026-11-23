@@ -1,0 +1,1127 @@
+{
+  "schemaVersion": 1,
+  "source": "CS-Bachelors-Journey-main.zip/index.html :: CURRICULUM_STAGES",
+  "stages": [
+    {
+      "id": "stage-1",
+      "title": "المرحلة ١: الأساسيات المطلقة (هاردوير + رياضيات تمهيدية + برمجة + Linux)",
+      "courses": [
+        {
+          "code": "HW101",
+          "name": "أساسيات الهاردوير والمنطق الرقمي",
+          "prereqs": [
+            "لا يوجد (البداية من الصفر)"
+          ],
+          "lessons": [
+            {
+              "title": "الفيزياء الكهربائية والنظام الثنائي والأرقام السالبة",
+              "focus": "Voltage 0V/5V, Silicon, Binary, Hex, Two's Complement"
+            },
+            {
+              "title": "الترانزستورات والبوابات المنطقية والجبر البولياني",
+              "focus": "MOSFET, NOT, NAND, NOR, AND, OR, XOR, De Morgan's"
+            },
+            {
+              "title": "الدوائر الحسابية ووحدة الحساب والمنطق",
+              "focus": "Mux/Demux, Half/Full/Ripple-Carry Adders & ALU"
+            },
+            {
+              "title": "الذاكرة التتابعية، نبضة الساعة، والمسجلات",
+              "focus": "Quartz Clock, SR/D Latch, D Flip-Flop & Registers"
+            },
+            {
+              "title": "بناء الذاكرة العشوائية (RAM) من الصفر وكيفية العنونة",
+              "focus": "External Interface & Decoder, DRAM 1T1C & Refresh vs SRAM, 2D Matrix & RAS/CAS, System Buses & ROM/Flash"
+            },
+            {
+              "title": "معمارية المعالج البسيط ودورة الجلب والتنفيذ",
+              "focus": "Datapath, Control Unit, PC, IR & Fetch-Decode-Execute"
+            },
+            {
+              "title": "لغة الآلة ولغة التجميع",
+              "focus": "Machine Code, Opcode/Operands, Assembly & Assembler"
+            },
+            {
+              "title": "مشروع: محاكاة حاسوب متكامل وتشغيل برنامج Assembly عليه",
+              "focus": "End-to-End Simple Computer Simulation & Assembly Execution"
+            }
+          ]
+        },
+        {
+          "code": "MATH100",
+          "name": "الرياضيات التمهيدية واللوغاريتمات",
+          "prereqs": [
+            "لا يوجد"
+          ],
+          "lessons": [
+            {
+              "title": "أساسيات الجبر والمعادلات والمتباينات",
+              "focus": "Linear & Quadratic Equations, Inequalities & Algebraic Manipulation"
+            },
+            {
+              "title": "الدوال والتمثيل البياني ومعدلات النمو",
+              "focus": "Functions, Domain/Range, Graphs & Growth Rates"
+            },
+            {
+              "title": "الأسس واللوغاريتمات",
+              "focus": "Exponents & Binary Logarithms log2"
+            },
+            {
+              "title": "المتتاليات الحسابية والهندسية والمجاميع",
+              "focus": "Arithmetic/Geometric Sequences & Summations (Σ)"
+            },
+            {
+              "title": "أساسيات المجموعات والفترات والدوال الأرضية والسقفية وباقي القسمة",
+              "focus": "Sets, Intervals, Floor/Ceiling Functions & Modulo Arithmetic"
+            },
+            {
+              "title": "مبادئ الاحتمالات البسيطة وقواعد العد الأولية",
+              "focus": "Basic Probability, Sample Space & Fundamental Counting Rules"
+            },
+            {
+              "title": "تطبيق اللوغاريتمات والمجاميع في تحليل الخوارزميات",
+              "focus": "Applying log2 and Summations to Algorithmic Step Counting"
+            },
+            {
+              "title": "تقييم: حل مسائل جبر ولوغاريتمات ومجاميع شاملة",
+              "focus": "Comprehensive Problem Solving Assessment in Pre-Calculus & Logs"
+            }
+          ]
+        },
+        {
+          "code": "CS101",
+          "name": "مدخل علوم الحاسب والبرمجة (Python)",
+          "prereqs": [
+            "HW101",
+            "MATH100"
+          ],
+          "lessons": [
+            {
+              "title": "الحوسبة، التجريد، والخوارزميات",
+              "focus": "Computation, Abstraction, Algorithms & Hero's Method"
+            },
+            {
+              "title": "كفاءة الخوارزميات: البحث الخطي مقابل البحث الثنائي",
+              "focus": "Linear Search vs Binary Search & Step Scaling"
+            },
+            {
+              "title": "القيم، أنواع البيانات في الذاكرة، والتحويل",
+              "focus": "Values, Memory Representation of Types & Type Casting"
+            },
+            {
+              "title": "الشروط المنطقية واتخاذ القرار",
+              "focus": "Conditionals, Relational Operators & Boolean Logic"
+            },
+            {
+              "title": "الدوال، نطاق المتغيرات، Call Stack والاستدعاء الذاتي",
+              "focus": "Functions, LEGB Scope, Call Stack & Recursion"
+            },
+            {
+              "title": "القوائم، السلاسل النصية، والصفوف",
+              "focus": "Lists, Strings, Tuples & Mutability vs Immutability"
+            },
+            {
+              "title": "القواميس، المجموعات، ومعالجة الملفات والاستثناءات",
+              "focus": "Dicts, Sets, File I/O & try / except / finally / raise"
+            },
+            {
+              "title": "مشروع: نظام إدارة بيانات ومعالجة ملفات نصية",
+              "focus": "Capstone Project: Data Management & Text File Processing System"
+            }
+          ]
+        },
+        {
+          "code": "CS102",
+          "name": "بيئة Linux وأدوات المطور (Git & Shell)",
+          "prereqs": [
+            "CS101"
+          ],
+          "lessons": [
+            {
+              "title": "هيكل نظام Linux وأوامر التيرمنال الأساسية",
+              "focus": "Linux Filesystem Hierarchy & Core Shell Commands"
+            },
+            {
+              "title": "الأنابيب وإعادة التوجيه ومعالجة النصوص",
+              "focus": "Pipes (|), Redirection, grep, sed & awk"
+            },
+            {
+              "title": "الصلاحيات وإدارة العمليات في لينكس",
+              "focus": "File Permissions (chmod/chown), Processes, Signals & ps/kill"
+            },
+            {
+              "title": "آلية عمل Git الداخلية",
+              "focus": "Commits, Blobs, Trees, Branches, HEAD & History"
+            },
+            {
+              "title": "حل تعارضات الدمج والعمل التعاوني",
+              "focus": "Merge Conflicts, Rebasing, Remotes & Pull Requests"
+            },
+            {
+              "title": "البيئات المعزولة وإدارة الحزم",
+              "focus": "Virtual Environments (venv) & Package Management (pip)"
+            },
+            {
+              "title": "أتمتة المهام عبر Bash Scripting و Makefiles",
+              "focus": "Shell Scripts, Variables, Loops & Build Automation with Makefiles"
+            },
+            {
+              "title": "مشروع: بناء أداة سطر أوامر (CLI Tool) موثقة",
+              "focus": "Capstone Project: Documented Command-Line Interface Tool"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-2",
+      "title": "المرحلة ٢: الرياضيات المتقطعة وتصميم البرمجيات",
+      "courses": [
+        {
+          "code": "MATH101",
+          "name": "الرياضيات المتقطعة ١: المنطق والبرهان",
+          "prereqs": [
+            "MATH100"
+          ],
+          "lessons": [
+            {
+              "title": "المنطق القضائي والكمي وجداول الصواب",
+              "focus": "Propositional/Predicate Logic, Quantifiers & Truth Tables"
+            },
+            {
+              "title": "قواعد الاستنتاج وطرق البرهان الرياضي",
+              "focus": "Direct Proof, Contrapositive, Contradiction & Equivalence"
+            },
+            {
+              "title": "الاستقراء الرياضي والبرهان القوي",
+              "focus": "Mathematical Induction & Strong Induction"
+            },
+            {
+              "title": "الجبر المتقطع للمجموعات والدوال العلائقية",
+              "focus": "Set Identities, Cartesian Products, Relations & Functions"
+            },
+            {
+              "title": "التكافؤ والترتيب الجزئي والشبكات",
+              "focus": "Equivalence Relations, Partial Orders & Lattices"
+            },
+            {
+              "title": "أساسيات العد والتوافقية الأولية",
+              "focus": "Permutations, Combinations & Binomial Coefficients"
+            },
+            {
+              "title": "تطبيقات المنطق والبراهين في التحقق البرمجي",
+              "focus": "Loop Invariants, Boolean Circuits & Formal Reasoning"
+            },
+            {
+              "title": "تقييم: براهين منطقية واستقراء رياضي شامل",
+              "focus": "Comprehensive Proofs & Discrete Logic Assessment"
+            }
+          ]
+        },
+        {
+          "code": "CS103",
+          "name": "تصميم البرامج والبرمجة الكائنية (OOP)",
+          "prereqs": [
+            "CS101",
+            "CS102"
+          ],
+          "lessons": [
+            {
+              "title": "الفئات والكائنات وحالة الكائن في الذاكرة",
+              "focus": "Classes, Objects, Attributes, Methods & Object References"
+            },
+            {
+              "title": "التغليف وحماية الحالة الداخلية",
+              "focus": "Encapsulation, Properties, Invariants & Information Hiding"
+            },
+            {
+              "title": "الوراثة وتعدد الأشكال والتركيب",
+              "focus": "Inheritance, Polymorphism, Method Overriding & Composition over Inheritance"
+            },
+            {
+              "title": "التجريد والفئات المجردة والواجهات",
+              "focus": "Abstraction, Abstract Base Classes & Interfaces"
+            },
+            {
+              "title": "مبادئ التصميم الموجهة للكائنات (SOLID)",
+              "focus": "Single Responsibility, Open/Closed, Liskov, Interface Segregation & DIP"
+            },
+            {
+              "title": "أنماط التصميم الأساسية",
+              "focus": "Factory, Strategy, Observer & Singleton Design Patterns"
+            },
+            {
+              "title": "الاختبارات الوحدوية والتصميم القابل للاختبار",
+              "focus": "Unit Testing, Mocking, Edge Cases & Testable Architecture"
+            },
+            {
+              "title": "مشروع: تصميم نظام برمجي متكامل بمبادئ OOP",
+              "focus": "Capstone Project: Object-Oriented Software System Design"
+            }
+          ]
+        },
+        {
+          "code": "MATH102",
+          "name": "الرياضيات المتقطعة ٢: العد والاحتمالات والرسوم",
+          "prereqs": [
+            "MATH101"
+          ],
+          "lessons": [
+            {
+              "title": "مبدأ برج الحمام ومبدأ الشمول والإقصاء",
+              "focus": "Pigeonhole Principle & Inclusion-Exclusion Principle"
+            },
+            {
+              "title": "الاحتمالات المتقطعة والمتغيرات العشوائية والتوقع الخطي",
+              "focus": "Discrete Probability, Random Variables & Linearity of Expectation"
+            },
+            {
+              "title": "العلاقات التكرارية وحل المعادلات التراجعية",
+              "focus": "Recurrence Relations, Substitution & Master Method Intuition"
+            },
+            {
+              "title": "مقدمة نظرية الرسوم والمصطلحات الأساسية",
+              "focus": "Graphs, Vertices, Edges, Degrees, Paths & Connectivity"
+            },
+            {
+              "title": "الأشجار وخصائصها الرياضية والتمثيلية",
+              "focus": "Trees, Spanning Trees, Rooted Trees & Traversal Properties"
+            },
+            {
+              "title": "الرسوم الموجهة والموزونة والمسارات والدورات",
+              "focus": "Directed/Weighted Graphs, DAGs, Eulerian & Hamiltonian Concepts"
+            },
+            {
+              "title": "تلوين الرسوم وتطبيقاتها في الشبكات والجدولة",
+              "focus": "Graph Coloring, Scheduling & Network Modeling"
+            },
+            {
+              "title": "تقييم: مسائل عد واحتمالات وعلاقات تكرارية ورسوم",
+              "focus": "Comprehensive Counting, Recurrences & Graph Theory Assessment"
+            }
+          ]
+        },
+        {
+          "code": "CS201",
+          "name": "هياكل البيانات الأساسية (Data Structures)",
+          "prereqs": [
+            "CS103",
+            "MATH102"
+          ],
+          "lessons": [
+            {
+              "title": "تحليل التعقيد الزمني والمكاني (Big-O, Ω, Θ)",
+              "focus": "Asymptotic Analysis, Time/Space Complexity & Growth Comparison"
+            },
+            {
+              "title": "المصفوفات الديناميكية والقوائم المترابطة",
+              "focus": "Dynamic Arrays (Amortized Growth), Singly/Doubly Linked Lists"
+            },
+            {
+              "title": "المكدسات والطوابير والطوابير الدائرية",
+              "focus": "Stacks, Queues, Circular Buffers & Deques"
+            },
+            {
+              "title": "جداول التجزئة وحل التصادمات",
+              "focus": "Hash Functions, Load Factor, Chaining & Open Addressing"
+            },
+            {
+              "title": "الأشجار الثنائية وأشجار البحث الثنائية",
+              "focus": "Binary Trees, Traversals (DFS/BFS) & Binary Search Trees (BST)"
+            },
+            {
+              "title": "الأشجار المتوازنة (AVL و Red-Black Trees) و Tries",
+              "focus": "AVL Rotations, Red-Black Tree Balancing & Prefix Tries"
+            },
+            {
+              "title": "الأكوام الثنائية وطوابير الأولوية وتمثيل الرسوم",
+              "focus": "Binary Heaps, Priority Queues & Adjacency List/Matrix Graphs"
+            },
+            {
+              "title": "مشروع: بناء مكتبة هياكل بيانات متكاملة من الصفر",
+              "focus": "Capstone Project: Custom Data Structures Library & Benchmarks"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-3",
+      "title": "المرحلة ٣: برمجة الأنظمة، المعمارية، والخوارزميات والرياضيات التطبيقية",
+      "courses": [
+        {
+          "code": "CS202",
+          "name": "البرمجة بلغة C وإدارة الذاكرة (Pointers & Heap)",
+          "prereqs": [
+            "HW101",
+            "CS201"
+          ],
+          "lessons": [
+            {
+              "title": "بنية برنامج C ومراحل الترجمة والربط",
+              "focus": "Preprocessor, Compiler, Assembler, Linker & Executable Layout"
+            },
+            {
+              "title": "المؤشرات وعناوين الذاكرة وحجم الكلمة والذاكرة الافتراضية",
+              "focus": "Pointers, &, *, Pointer Arithmetic, 32/64-bit Word Size & Virtual vs Physical Address"
+            },
+            {
+              "title": "المصفوفات والسلاسل النصية وحساب الإزاحات في الذاكرة",
+              "focus": "Contiguous Arrays, Null-Terminated Strings & Row-Major Memory Offsets"
+            },
+            {
+              "title": "إدارة الذاكرة الديناميكية: Stack مقابل Heap",
+              "focus": "malloc, calloc, realloc, free, Stack Frames vs Heap Allocation & Leaks"
+            },
+            {
+              "title": "الهياكل والاتحادات ومحاذاة البيانات في الذاكرة",
+              "focus": "struct, union, enum, Memory Alignment, Padding & Bitfields"
+            },
+            {
+              "title": "مؤشرات الدوال والواجهات العامة في C",
+              "focus": "Function Pointers, Callbacks & void* Generic Data Structures"
+            },
+            {
+              "title": "أدوات كشف أخطاء الذاكرة وتصحيح الأخطاء",
+              "focus": "Valgrind, AddressSanitizer, GDB & Debugging Segfaults/Use-After-Free"
+            },
+            {
+              "title": "مشروع: بناء مدير ذاكرة مخصص (Custom Allocator)",
+              "focus": "Capstone Project: Custom Heap Memory Allocator in C"
+            }
+          ]
+        },
+        {
+          "code": "CS203",
+          "name": "معمارية الحاسوب ولغة التجميع (Architecture & Assembly)",
+          "prereqs": [
+            "HW101",
+            "CS202"
+          ],
+          "lessons": [
+            {
+              "title": "معمارية مجموعة التعليمات (ISA) وتصميم مسار البيانات",
+              "focus": "Registers, Instruction Formats, Load/Store vs CISC & Datapath Control"
+            },
+            {
+              "title": "برمجة لغة التجميع واستدعاء الدوال (Calling Convention)",
+              "focus": "Assembly Instructions, Jumps, Stack Frame Setup & ABI Calling Conventions"
+            },
+            {
+              "title": "خط الأنابيب (Pipelining) وتقسيم مراحل التنفيذ",
+              "focus": "IF, ID, EX, MEM, WB Pipeline Stages & Throughput vs Latency"
+            },
+            {
+              "title": "مخاطر خط الأنابيب والتنبؤ بالتفرع",
+              "focus": "Data Hazards, Forwarding, Stalls, Control Hazards & Branch Prediction"
+            },
+            {
+              "title": "التسلسل الهرمي للذاكرة والكاش (L1/L2/L3 Cache)",
+              "focus": "Spatial/Temporal Locality, Direct-Mapped, Set-Associative Cache & Replacement Policies"
+            },
+            {
+              "title": "المعالجات متعددة الأنوية واتساق الكاش (MESI)",
+              "focus": "Multi-Core Architecture, False Sharing & MESI Cache Coherence Protocol"
+            },
+            {
+              "title": "الذاكرة الافتراضية و TLB والمقاطعات",
+              "focus": "Page Tables, TLB Lookup, I/O Polling vs Interrupts & Traps"
+            },
+            {
+              "title": "مشروع: محاكاة معالج Pipelined مع ذاكرة كاش",
+              "focus": "Capstone Project: Pipelined CPU & Cache Simulator"
+            }
+          ]
+        },
+        {
+          "code": "CS204",
+          "name": "تحليل وتصميم الخوارزميات ١ (Algorithms 1)",
+          "prereqs": [
+            "CS201",
+            "MATH102"
+          ],
+          "lessons": [
+            {
+              "title": "استراتيجية فرق تسد (Divide and Conquer) ومبرهنة الرئيس",
+              "focus": "Recurrence Trees, Master Theorem & Divide-and-Conquer Design"
+            },
+            {
+              "title": "خوارزميات الفرز المتقدمة وتحليلها",
+              "focus": "Merge Sort, Quick Sort, Partitioning Schemes & Stability/Complexity"
+            },
+            {
+              "title": "البحث الثنائي على مجال الحل والاختيار الترتيبي",
+              "focus": "Binary Search on Answer Space & Quickselect"
+            },
+            {
+              "title": "الخوارزميات الجشعة (Greedy Algorithms) وإثبات صحتها",
+              "focus": "Greedy Choice Property, Exchange Arguments, Interval Scheduling & Huffman"
+            },
+            {
+              "title": "استكشاف الرسوم البيانية: BFS و DFS والترتيب الطوبولوجي",
+              "focus": "Breadth-First Search, Depth-First Search, Connected Components & Topological Sort"
+            },
+            {
+              "title": "خوارزميات أقصر المسارات في الرسوم الموزونة",
+              "focus": "Dijkstra's Algorithm, Bellman-Ford & Negative Cycles"
+            },
+            {
+              "title": "الأشجار الممتدة الصغرى (MST) وهياكل المجموعات المنفصلة",
+              "focus": "Kruskal, Prim & Disjoint Set Union (Union-Find with Path Compression)"
+            },
+            {
+              "title": "مشروع: محرك توجيه وحساب مسارات على شبكة رسوم",
+              "focus": "Capstone Project: Graph Routing & Pathfinding Engine"
+            }
+          ]
+        },
+        {
+          "code": "MATH201",
+          "name": "التفاضل والتكامل والجبر الخطي",
+          "prereqs": [
+            "MATH100"
+          ],
+          "lessons": [
+            {
+              "title": "المتجهات والضرب النقطي والاتجاهي والمسافات",
+              "focus": "Vectors, Dot Product, Cross Product, Norms & Projections"
+            },
+            {
+              "title": "المصفوفات والتحويلات الخطية والإحداثيات المتجانسة",
+              "focus": "Matrix Multiplication, Linear Transformations, 2D/3D Affine & Homogeneous Coordinates"
+            },
+            {
+              "title": "أنظمة المعادلات الخطية والرتبة والفضاء الصفري",
+              "focus": "Gaussian Elimination, Row Echelon Form, Rank, Basis & Null Space"
+            },
+            {
+              "title": "المحددات والقيم والمتجهات الذاتية و SVD",
+              "focus": "Determinants, Eigenvalues, Eigenvectors, Diagonalization & Singular Value Decomposition"
+            },
+            {
+              "title": "النهايات والاستمرارية وقواعد الاشتقاق",
+              "focus": "Limits, Derivatives, Chain Rule & Rates of Change"
+            },
+            {
+              "title": "الاشتقاق الجزئي والمصفوفة اليعقوبية والتدرج (Gradient)",
+              "focus": "Partial Derivatives, Gradient Vector, Directional Derivatives & Jacobian"
+            },
+            {
+              "title": "التكامل المحدود وغير المحدود والتقريب العددي",
+              "focus": "Integrals, Fundamental Theorem of Calculus & Numerical Quadrature"
+            },
+            {
+              "title": "مشروع: تطبيق الجبر الخطي والتدرج في التحسين العددي",
+              "focus": "Capstone Project: Linear Algebra & Gradient Optimization Toolkit"
+            }
+          ]
+        },
+        {
+          "code": "MATH202",
+          "name": "الاحتمالات والإحصاء التطبيقي",
+          "prereqs": [
+            "MATH102",
+            "MATH201"
+          ],
+          "lessons": [
+            {
+              "title": "الاحتمال الشرطي والاستقلال ونظرية بايز",
+              "focus": "Conditional Probability, Independence, Law of Total Probability & Bayes' Theorem"
+            },
+            {
+              "title": "التوزيعات الاحتمالية المنفصلة والمستمرة",
+              "focus": "Bernoulli, Binomial, Poisson, Uniform & Exponential Distributions"
+            },
+            {
+              "title": "التوقع الرياضي والتباين والانحراف المعياري والتغاير",
+              "focus": "Expectation, Variance, Covariance, Correlation & Moment Generating Intuition"
+            },
+            {
+              "title": "التوزيع الطبيعي وقانون الأعداد الكبيرة والنهاية المركزية",
+              "focus": "Normal Distribution, Law of Large Numbers & Central Limit Theorem (CLT)"
+            },
+            {
+              "title": "التقدير الإحصائي وفترات الثقة",
+              "focus": "Point Estimation, Bias/Variance Tradeoff & Confidence Intervals"
+            },
+            {
+              "title": "اختبار الفرضيات الإحصائية والقيمة الاحتمالية",
+              "focus": "Null/Alternative Hypotheses, Type I/II Errors, p-value & Significance"
+            },
+            {
+              "title": "الانحدار الخطي وتقييم النماذج الإحصائية",
+              "focus": "Simple/Multiple Linear Regression, Least Squares & Residual Analysis"
+            },
+            {
+              "title": "مشروع: تحليل بيانات إحصائي وتقرير استدلالي متكامل",
+              "focus": "Capstone Project: Statistical Data Analysis & Inference Pipeline"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-4",
+      "title": "المرحلة ٤: البنية التحتية العميقة",
+      "courses": [
+        {
+          "code": "CS301",
+          "name": "أنظمة التشغيل (Operating Systems)",
+          "prereqs": [
+            "CS202",
+            "CS203"
+          ],
+          "lessons": [
+            {
+              "title": "بنية النواة والعمليات واستدعاءات النظام",
+              "focus": "Kernel vs User Mode, Process Control Block (PCB), fork/exec & System Calls"
+            },
+            {
+              "title": "جدولة المعالج وخوارزميات التخصيص",
+              "focus": "FCFS, SJF/STCF, Round Robin, Multi-Level Feedback Queue & Context Switching"
+            },
+            {
+              "title": "الخيوط والتزامن وحالات السباق",
+              "focus": "User/Kernel Threads, Shared Address Space, Race Conditions & Critical Sections"
+            },
+            {
+              "title": "الأقفال والسيمافور والمتغيرات الشرطية والجمود",
+              "focus": "Mutexes, Spinlocks, Semaphores, Condition Variables & Deadlock Conditions"
+            },
+            {
+              "title": "إدارة الذاكرة الافتراضية والصفحات واستبدال الصفحات",
+              "focus": "Paging, Multi-Level Page Tables, Page Faults, Swapping & LRU/Clock Replacement"
+            },
+            {
+              "title": "أنظمة الملفات والـ Inodes والأدلة",
+              "focus": "Inodes, Data Blocks, Directories, Hard/Soft Links & Journaling Basics"
+            },
+            {
+              "title": "أدوات الإدخال والإخراج والأقراص والـ DMA",
+              "focus": "Device Drivers, Interrupts, Direct Memory Access & Storage Scheduling"
+            },
+            {
+              "title": "مشروع: بناء Shell متكامل ونظام جدولة عمليات مصغر",
+              "focus": "Capstone Project: Unix-like Shell & Mini Process Scheduler"
+            }
+          ]
+        },
+        {
+          "code": "CS302",
+          "name": "شبكات الحاسوب (Computer Networks)",
+          "prereqs": [
+            "CS301"
+          ],
+          "lessons": [
+            {
+              "title": "نماذج الطبقات (OSI و TCP/IP) والتغليف",
+              "focus": "Encapsulation, Decapsulation, Throughput, Delay, Loss & Protocol Layering"
+            },
+            {
+              "title": "الطبقة الفيزيائية وربط البيانات و Ethernet و Wi-Fi",
+              "focus": "Framing, MAC Addresses, ARP, Switches, Ethernet & Wi-Fi CSMA/CA"
+            },
+            {
+              "title": "عنونة الشبكات والتوجيه وبروتوكولات المسارات",
+              "focus": "IPv4/IPv6, CIDR Subnetting, NAT, Forwarding Tables, OSPF & BGP Concepts"
+            },
+            {
+              "title": "بروتوكول UDP وبروتوكول TCP الموثوق",
+              "focus": "Ports, UDP Datagram, TCP 3-Way Handshake, Sequence/ACK Numbers & Retransmission"
+            },
+            {
+              "title": "التحكم في التدفق والازدحام في الشبكات",
+              "focus": "Sliding Window, Flow Control, Slow Start, Congestion Avoidance & Packet Loss Signals"
+            },
+            {
+              "title": "بروتوكولات طبقة التطبيق: DNS و HTTP/HTTPS و TLS",
+              "focus": "DNS Resolution Hierarchy, HTTP Request/Response, Cookies, TLS Handshake & Web Security"
+            },
+            {
+              "title": "برمجة المقابس (Socket Programming) والتعامل مع الاتصالات",
+              "focus": "TCP/UDP Sockets, Bind/Listen/Accept, Non-Blocking I/O & Timeouts"
+            },
+            {
+              "title": "مشروع: بناء خادم ويب (HTTP Server) من الصفر عبر Sockets",
+              "focus": "Capstone Project: Multi-Client HTTP Server Built with Raw Sockets"
+            }
+          ]
+        },
+        {
+          "code": "CS303",
+          "name": "قواعد البيانات وهندستها الداخلية (Databases)",
+          "prereqs": [
+            "CS201",
+            "MATH101"
+          ],
+          "lessons": [
+            {
+              "title": "النموذج العلائقي والجبر العلائقي ولغة SQL",
+              "focus": "Relational Model, Keys, Joins, Aggregations, Subqueries & Relational Algebra"
+            },
+            {
+              "title": "تصميم المخططات والتطبيع (Normalization)",
+              "focus": "ER Modeling, Functional Dependencies, 1NF, 2NF, 3NF & BCNF"
+            },
+            {
+              "title": "تخزين البيانات على القرص والصفحات والفهارس",
+              "focus": "Slotted Pages, Heap Files, B+ Trees, Hash Indexes & Clustered vs Secondary Indexes"
+            },
+            {
+              "title": "تنفيذ الاستعلامات وتحسين خطط التنفيذ",
+              "focus": "Scan/Join Algorithms, Cost Estimation, Query Plans & Index Selection"
+            },
+            {
+              "title": "المعاملات وخصائص ACID وعزل المعاملات",
+              "focus": "Atomicity, Consistency, Isolation, Durability & Dirty/Non-Repeatable/Phantom Reads"
+            },
+            {
+              "title": "التحكم في التزامن والأقفال و MVCC",
+              "focus": "Two-Phase Locking (2PL), Deadlock Handling & Multi-Version Concurrency Control"
+            },
+            {
+              "title": "الاسترداد من الأعطال وسجل الكتابة المسبقة (WAL)",
+              "focus": "Buffer Pool Manager, Write-Ahead Logging (WAL), Checkpoints & Crash Recovery"
+            },
+            {
+              "title": "مشروع: بناء محرك تخزين وفهرسة واستعلام مصغر",
+              "focus": "Capstone Project: Mini Storage, B-Tree Index & Query Engine"
+            }
+          ]
+        },
+        {
+          "code": "CS304",
+          "name": "نظرية الحوسبة (Theory of Computation)",
+          "prereqs": [
+            "MATH102",
+            "CS204"
+          ],
+          "lessons": [
+            {
+              "title": "الأبجديات واللغات والآلات المحدودة (DFA و NFA)",
+              "focus": "Alphabets, Strings, Languages, Deterministic/Non-Deterministic Finite Automata & Equivalence"
+            },
+            {
+              "title": "التعبيرات النمطية ومبرهنة الضخ للغات المنتظمة",
+              "focus": "Regular Expressions, Kleene's Theorem & Pumping Lemma for Regular Languages"
+            },
+            {
+              "title": "القواعد الحرة السياق (CFG) وآلات المكدس (PDA)",
+              "focus": "Context-Free Grammars, Parse Trees, Ambiguity & Pushdown Automata"
+            },
+            {
+              "title": "آلات تورنغ (Turing Machines) وأطروحة تشيرش-تورينغ",
+              "focus": "Turing Machine Formal Definition, Tape Operations, Multi-Tape & Church-Turing Thesis"
+            },
+            {
+              "title": "القابلية للحساب والاختزال ومشكلة التوقف",
+              "focus": "Decidable vs Recognizable Languages, Reductions & Halting Problem Undecidability"
+            },
+            {
+              "title": "مقدمة التعقيد الحسابي وأصناف P و NP",
+              "focus": "Time Complexity, Polynomial Time, P, NP & Verifiers"
+            },
+            {
+              "title": "الاختزال متعدد الحدود واكتمال NP-Completeness",
+              "focus": "Polynomial-Time Reductions, NP-Hard, NP-Complete & SAT/Cook-Levin Intuition"
+            },
+            {
+              "title": "تقييم: تصميم آلات وبراهين القابلية للحساب والتعقيد",
+              "focus": "Comprehensive Theory of Computation Proofs & Automata Design Assessment"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-5",
+      "title": "المرحلة ٥: الهندسة المتقدمة",
+      "courses": [
+        {
+          "code": "CS305",
+          "name": "بناء المترجمات ولغات البرمجة (Compilers)",
+          "prereqs": [
+            "CS202",
+            "CS304"
+          ],
+          "lessons": [
+            {
+              "title": "معمارية المترجم ومراحل الترجمة من المصدر للهدف",
+              "focus": "Lexer, Parser, Semantic Analyzer, IR, Optimizer & Code Generator"
+            },
+            {
+              "title": "التحليل المعجمي (Lexical Analysis) والرموز (Tokens)",
+              "focus": "Finite Automata for Scanners, Token Streams & Lexing Error Handling"
+            },
+            {
+              "title": "التحليل النحوي (Parsing) وشجرة التجريد النحوية (AST)",
+              "focus": "Context-Free Grammars, Recursive Descent / Pratt Parsing & Abstract Syntax Trees"
+            },
+            {
+              "title": "التحليل الدلالي وفحص الأنواع وجدول الرموز",
+              "focus": "Symbol Tables, Lexical Scoping, Type Checking & Type Inference Basics"
+            },
+            {
+              "title": "التمثيل الوسيط (IR) وبناء الرسوم البيانية للتحكم",
+              "focus": "Three-Address Code / SSA Concepts & Control Flow Graphs (CFG)"
+            },
+            {
+              "title": "تحسين الكود المحلي والعام",
+              "focus": "Constant Folding, Dead Code Elimination, Loop Optimizations & Dataflow Analysis"
+            },
+            {
+              "title": "توليد الشيفرة وتخصيص المسجلات",
+              "focus": "Instruction Selection, Register Allocation, Graph Coloring & Stack/Register Mapping"
+            },
+            {
+              "title": "مشروع: بناء مترجم/مفسر لغة برمجة متكاملة",
+              "focus": "Capstone Project: Compiler or Interpreter for a Custom Programming Language"
+            }
+          ]
+        },
+        {
+          "code": "CS306",
+          "name": "الخوارزميات المتقدمة والبرمجة الديناميكية",
+          "prereqs": [
+            "CS204"
+          ],
+          "lessons": [
+            {
+              "title": "البرمجة الديناميكية: التداخل والتقسيم الأمثل",
+              "focus": "Overlapping Subproblems, Optimal Substructure, Memoization vs Tabulation"
+            },
+            {
+              "title": "مسائل البرمجة الديناميكية الكلاسيكية على السلاسل والفترات",
+              "focus": "LCS, Edit Distance, Knapsack Variants & Interval/Matrix Chain DP"
+            },
+            {
+              "title": "البرمجة الديناميكية على الأشجار والرسوم وأقنعة البتات",
+              "focus": "Tree DP, DAG DP, Bitmask DP & State Compression"
+            },
+            {
+              "title": "خوارزميات الشبكات والتدفق الأعظم (Max-Flow)",
+              "focus": "Flow Networks, Augmenting Paths, Ford-Fulkerson, Edmonds-Karp & Min-Cut Theorem"
+            },
+            {
+              "title": "معالجة النصوص المتقدمة ومطابقة الأنماط",
+              "focus": "KMP Prefix Function, Z-Algorithm, Rabin-Karp Hashing & Trie Automata"
+            },
+            {
+              "title": "هياكل البيانات المتقدمة للبحث والاستعلام على المجالات",
+              "focus": "Segment Trees, Lazy Propagation, Fenwick Trees (BIT) & Sparse Tables"
+            },
+            {
+              "title": "الخوارزميات التقريبية والعشوائية والتعامل مع الصعوبة",
+              "focus": "Approximation Ratios, Randomized Algorithms, Monte Carlo vs Las Vegas & Heuristics"
+            },
+            {
+              "title": "مشروع: حل منظومة مسائل خوارزمية متقدمة وتحليل الأداء",
+              "focus": "Capstone Project: Advanced Algorithms Suite & Benchmark Report"
+            }
+          ]
+        },
+        {
+          "code": "CS307",
+          "name": "هندسة البرمجيات والاختبارات (Software Engineering)",
+          "prereqs": [
+            "CS103",
+            "CS303"
+          ],
+          "lessons": [
+            {
+              "title": "هندسة المتطلبات وتحديد النطاق والواجهات",
+              "focus": "Functional/Non-Functional Requirements, Domain Modeling & API Contracts"
+            },
+            {
+              "title": "المعمارية البرمجية وتقسيم الأنظمة والاعتماديات",
+              "focus": "Layered, Modular & Event-Driven Architecture, Coupling vs Cohesion"
+            },
+            {
+              "title": "إدارة الحالة والبيانات وتصميم طبقات الخدمة",
+              "focus": "Separation of Concerns, Repositories, Services, Error Boundaries & Validation"
+            },
+            {
+              "title": "هرم الاختبارات: الوحدوي والتكاملي والطرفي",
+              "focus": "Unit, Integration, End-to-End Testing, Test Doubles & Coverage Meaning"
+            },
+            {
+              "title": "إعادة الهيكلة (Refactoring) وإدارة الديون التقنية",
+              "focus": "Code Smells, Incremental Refactoring, Backward Compatibility & Migrations"
+            },
+            {
+              "title": "التكامل والتسليم المستمر (CI/CD) وجودة الشيفرة",
+              "focus": "Automated Pipelines, Linters, Static Analysis, Release Versioning & Rollbacks"
+            },
+            {
+              "title": "المراقبة والسجلات والقياس في الإنتاج",
+              "focus": "Structured Logging, Metrics, Tracing, Health Checks & Incident Postmortems"
+            },
+            {
+              "title": "مشروع: هندسة وتسليم مشروع برمجي متكامل باختبارات و CI",
+              "focus": "Capstone Project: Full-Lifecycle Tested Software System with CI Workflow"
+            }
+          ]
+        },
+        {
+          "code": "CS308",
+          "name": "أمن المعلومات والتشفير (Cybersecurity)",
+          "prereqs": [
+            "CS301",
+            "CS302"
+          ],
+          "lessons": [
+            {
+              "title": "مبادئ الأمن ونماذج التهديدات والسرية والسلامة والتوافر",
+              "focus": "CIA Triad, Threat Modeling, Attack Surfaces, Least Privilege & Defense in Depth"
+            },
+            {
+              "title": "التشفير المتماثل ودوال التجزئة التشفيرية",
+              "focus": "Block/Stream Ciphers, AES Modes (GCM), Cryptographic Hash Functions & HMAC"
+            },
+            {
+              "title": "التشفير غير المتماثل وتبادل المفاتيح والتوقيع الرقمي",
+              "focus": "Modular Arithmetic Intuition, RSA/ECC Concepts, Diffie-Hellman & Digital Signatures"
+            },
+            {
+              "title": "إدارة الهوية والمصادقة والصلاحيات والجلسات",
+              "focus": "Password Hashing (Argon2/bcrypt), MFA, Tokens, RBAC & Session Security"
+            },
+            {
+              "title": "أمن الذاكرة والبرمجيات وثغرات التنفيذ",
+              "focus": "Buffer Overflows, Format Strings, Injection Flaws, ASLR/DEP & Input Sanitization"
+            },
+            {
+              "title": "أمن الشبكات وبروتوكولات النقل الآمن",
+              "focus": "TLS/PKI, Certificate Validation, Firewalls, MitM Attacks & DNS/HTTP Hardening"
+            },
+            {
+              "title": "تحليل الثغرات والاستجابة للحوادث والاختبار الدفاعي",
+              "focus": "Vulnerability Assessment, Patch Management, Audit Logs & Incident Response"
+            },
+            {
+              "title": "مشروع: بناء نظام مصادقة وتشفير وتدقيق أمني متكامل",
+              "focus": "Capstone Project: Secure Auth, Crypto & Audit Logging System"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-6",
+      "title": "المرحلة ٦: التخصصات المتقدمة ومشروع التخرج",
+      "courses": [
+        {
+          "code": "CS401",
+          "name": "الأنظمة الموزعة والحوسبة السحابية (Distributed Systems)",
+          "prereqs": [
+            "CS301",
+            "CS302",
+            "CS303"
+          ],
+          "lessons": [
+            {
+              "title": "أساسيات الأنظمة الموزعة والأعطال الجزئية والشبكات",
+              "focus": "Partial Failures, Network Partitions, Timeouts, Retries & Idempotency"
+            },
+            {
+              "title": "الترتيب الزمني والساعات المنطقية وحالات النظام",
+              "focus": "Physical Clocks vs Logical Clocks (Lamport/Vector Clocks) & State Machines"
+            },
+            {
+              "title": "نماذج الاتساق ومبرهنة CAP و PACELC",
+              "focus": "Strong vs Eventual Consistency, Linearizability, CAP Theorem & PACELC"
+            },
+            {
+              "title": "التكرار والتوافق الموزع (Replication & Consensus)",
+              "focus": "Leader-Follower Replication, Quorum Reads/Writes & Raft/Paxos Concepts"
+            },
+            {
+              "title": "التقسيم (Sharding) والتوجيه وتوزيع الأحمال",
+              "focus": "Consistent Hashing, Partitioning Strategies, Rebalancing & Hotspots"
+            },
+            {
+              "title": "المعاملات الموزعة والأنماط التعويضية",
+              "focus": "Two-Phase Commit (2PC) Limitations, Saga Pattern & Outbox Pattern"
+            },
+            {
+              "title": "المرونة والمراقبة والاختبار ضد الأعطال",
+              "focus": "Circuit Breakers, Backpressure, Rate Limiting, Distributed Tracing & Chaos Testing"
+            },
+            {
+              "title": "مشروع: بناء نظام تخزين أو خدمة موزعة متحملة للأعطال",
+              "focus": "Capstone Project: Fault-Tolerant Replicated/Partitioned Service"
+            }
+          ]
+        },
+        {
+          "code": "CS402",
+          "name": "الذكاء الاصطناعي وتعلم الآلة (AI & Machine Learning)",
+          "prereqs": [
+            "MATH201",
+            "MATH202",
+            "CS204"
+          ],
+          "lessons": [
+            {
+              "title": "أساسيات تعلم الآلة وتمثيل البيانات ودوال الخسارة",
+              "focus": "Supervised/Unsupervised/RL, Features, Train/Val/Test Splits & Loss Functions"
+            },
+            {
+              "title": "الانحدار والتصنيف والانحدار اللوجستي",
+              "focus": "Linear/Logistic Regression, Decision Boundaries, Gradient Descent & Optimization"
+            },
+            {
+              "title": "الأشجار والغابات العشوائية وتعزيز التدرج",
+              "focus": "Decision Trees, Gini/Entropy, Random Forests & Gradient Boosted Trees"
+            },
+            {
+              "title": "التعميم والإفراط في التخصيص والتنظيم",
+              "focus": "Bias-Variance Tradeoff, Overfitting, Underfitting, L1/L2 Regularization & Cross-Validation"
+            },
+            {
+              "title": "مقاييس التقييم وتشخيص الأخطاء في النماذج",
+              "focus": "Accuracy, Precision, Recall, F1-Score, ROC/AUC, Confusion Matrix & Data Leakage"
+            },
+            {
+              "title": "الشبكات العصبية والانتشار العكسي (Backpropagation)",
+              "focus": "Perceptrons, MLPs, Activation Functions, Chain Rule & Backpropagation"
+            },
+            {
+              "title": "التعلم غير الخاضع للإشراف والتجميع وتقليل الأبعاد",
+              "focus": "K-Means Clustering, PCA Intuition, Embeddings & Representation Learning"
+            },
+            {
+              "title": "مشروع: بناء خط أنابيب تعلم آلة كامل وتقييمه علمياً",
+              "focus": "Capstone Project: End-to-End ML Pipeline, Baselines & Error Analysis"
+            }
+          ]
+        },
+        {
+          "code": "CS403",
+          "name": "الحوسبة المتوازية وتحسين الأداء (Parallel Computing)",
+          "prereqs": [
+            "CS203",
+            "CS301"
+          ],
+          "lessons": [
+            {
+              "title": "قياس الأداء وقانون أمدال وقابلية التوازي",
+              "focus": "Latency vs Throughput, Speedup, Efficiency, Amdahl's Law & Gustafson's Law"
+            },
+            {
+              "title": "البرمجة بالخيوط والذاكرة المشتركة والتوازي البياناتي",
+              "focus": "Thread Pools, Work Stealing, Data vs Task Parallelism & Contention"
+            },
+            {
+              "title": "المتجهات والتعليمات SIMD وتحسين الوصول للذاكرة",
+              "focus": "SIMD Vectorization, Cache Locality, Stride Access, Prefetching & False Sharing Elimination"
+            },
+            {
+              "title": "التزامن المتقدم والهياكل الخالية من الأقفال",
+              "focus": "Atomic Operations, Memory Ordering, Lock-Free / Wait-Free Concepts & ABA Awareness"
+            },
+            {
+              "title": "أنماط الخوارزميات المتوازية: Parallel Map, Reduce, Scan",
+              "focus": "Parallel Reduction, Prefix Sum (Scan), Parallel Merge/Sort & Load Balancing"
+            },
+            {
+              "title": "الحوسبة على المسرعات والـ GPU (مفاهيم أساسية)",
+              "focus": "Host vs Device Memory, Warps/Blocks, SIMT Execution & Memory Coalescing"
+            },
+            {
+              "title": "القياس والملفات التعريفية (Profiling) وكشف الاختناقات",
+              "focus": "CPU Profilers, Flamegraphs, Cache Miss Counters & Bottleneck Analysis"
+            },
+            {
+              "title": "مشروع: تسريع خوارزمية أو معالج بيانات ثقيل وقياس التحسن",
+              "focus": "Capstone Project: Parallelized High-Performance Workload & Speedup Benchmark"
+            }
+          ]
+        },
+        {
+          "code": "CS404",
+          "name": "الرسوميات الحاسوبية والمحاكاة ثلاثية الأبعاد",
+          "prereqs": [
+            "MATH201",
+            "CS203"
+          ],
+          "lessons": [
+            {
+              "title": "نظام الإحداثيات والتحويلات الهندسية والمتجانسة",
+              "focus": "2D/3D Spaces, Translation, Rotation, Scaling, Homogeneous Matrices & Scene Graphs"
+            },
+            {
+              "title": "إسقاط الكاميرا وعرض المشهد ثلاثي الأبعاد",
+              "focus": "View Matrix, Orthographic vs Perspective Projection, Frustum & Viewport Transform"
+            },
+            {
+              "title": "خط أنابيب الرسوميات (Graphics Pipeline) والـ Rasterization",
+              "focus": "Vertices, Triangles, Clipping, Rasterization, Z-Buffer & Fragment Processing"
+            },
+            {
+              "title": "النماذج الضوئية والإضاءة والظلال",
+              "focus": "Ambient, Diffuse, Specular Lighting (Phong/Blinn-Phong), Normals & Shadow Mapping"
+            },
+            {
+              "title": "الخامات والإحداثيات النسيجية والشفافية",
+              "focus": "UV Mapping, Texture Filtering, Mipmaps, Normal Maps & Alpha Blending"
+            },
+            {
+              "title": "تتبع الأشعة (Ray Tracing) والانعكاس والانكسار",
+              "focus": "Ray-Sphere/Triangle Intersection, Shading Rays, Reflections, Refraction & Spatial Acceleration"
+            },
+            {
+              "title": "الرسوميات الإجرائية والمنحنيات والمحاكاة الفيزيائية",
+              "focus": "Bezier/Splines, Procedural Textures, Particle Systems & Numerical Integration"
+            },
+            {
+              "title": "مشروع: محرك عرض أو تتبع أشعة أو محاكاة ثلاثية الأبعاد",
+              "focus": "Capstone Project: 3D Renderer, Ray Tracer or Physics Simulation"
+            }
+          ]
+        },
+        {
+          "code": "CS490",
+          "name": "مشروع التخرج الهندسي المتكامل (Final Capstone)",
+          "prereqs": [
+            "جميع المواد السابقة (25 مادة)"
+          ],
+          "lessons": [
+            {
+              "title": "اختيار مشكلة هندسية حقيقية وصياغة المواصفات",
+              "focus": "Problem Definition, Scope, Constraints, Architecture Goals & Success Criteria"
+            },
+            {
+              "title": "التصميم المعماري الشامل وتقسيم المكونات والواجهات",
+              "focus": "System Architecture, Data Flow, Failure Modes, Tradeoffs & ADRs"
+            },
+            {
+              "title": "إعداد بيئة العمل والبنية التحتية والنماذج الأولية",
+              "focus": "Repository Structure, Core Skeleton, CI Setup & Risky Prototype Validation"
+            },
+            {
+              "title": "بناء النواة الأساسية والمنطق الجوهري للنظام",
+              "focus": "Core Engine Implementation, Clean Interfaces & Incremental Milestones"
+            },
+            {
+              "title": "التكامل بين المكونات وإدارة البيانات والأخطاء",
+              "focus": "End-to-End Integration, Edge Cases, Persistence & Error Handling"
+            },
+            {
+              "title": "الاختبارات الشاملة وقياس الأداء وتحسين نقاط الضعف",
+              "focus": "Automated Test Suite, Load/Performance Benchmarks & Bottleneck Fixes"
+            },
+            {
+              "title": "التوثيق الهندسي الكامل ومعمارية القرارات",
+              "focus": "Architecture Documentation, Setup Guide, API/Usage Docs & Limitations"
+            },
+            {
+              "title": "العرض النهائي ومراجعة المشروع وتسليمه",
+              "focus": "Final Demo, Engineering Retrospective, Future Work & Capstone Release"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
