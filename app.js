@@ -118,7 +118,7 @@ const names={reading:'الشرح',interactive:'التفاعل',lab:'المختب
 function masterPlan(meta){if(!meta.topics)return '';const lab=meta.lab;return `<details class="goals"><summary>خطة الدرس — النطاق والنشاط والمختبر</summary><p><b>الهدف:</b> ${esc(meta.learningObjective||'')}</p><p><b>الموضوعات:</b> ${esc((meta.topics||[]).join('، '))}</p><p><b>المتطلبات:</b> ${esc((meta.prerequisiteLessonIds||[]).join('، ')||'لا يوجد')}</p><p><b>النشاط المطلوب:</b> ${esc(meta.activity?.task||'')}</p><p><b>نتيجة النشاط:</b> ${esc(meta.activity?.expectedEvidence||'')}</p><p><b>المختبر:</b> ${esc(lab?.task||'غير مطلوب لهذه المحاضرة')}</p>${lab?`<p><b>التحكم:</b> ${esc((lab.learnerControls||[]).join('، '))}</p><p><b>الملاحظة:</b> ${esc((lab.observableResults||[]).join('، '))}</p>`:''}</details>`}
 function lessonPage(){const c=course(),l=lesson();if(!l)return `<div class="empty"><h3>لسه مفيش درس محدد</h3><p>اختار مقرر واضف درس جديد.</p>${button('فتح المقررات','goLibrary','secondary')}</div>`;const sections=l.sections||{},meta=lessonMetadata(l);return `<div class="eyebrow">${esc(c.code)} / ${esc(c.title)}</div><h1 class="hero-title">${esc(l.title)}</h1><p class="muted">${esc(meta.objective||l.objective||'')}</p><div class="actions" style="margin:16px 0">${button(running?'جارٍ التوليد...':'✦ توليد كل شاشات الدرس','generateAll','',running?'disabled':'')}${button('☷ الملاحظات','goNotes','ghost')}${button(l.completed?'✓ الدرس مكتمل — إلغاء':'○ اعتبار الدرس مكتمل','toggleLesson','ghost')}</div><div class="tabs" role="tablist">${Object.entries(names).map(([k,n])=>`<button role="tab" aria-selected="${detail===k}" class="pill ${detail===k?'active':''}" data-detail="${k}">${n} ${sections[k]?'✓':''}</button>`).join('')}</div><div class="toolbar">${button(sections[detail]?'↻ إعادة توليد '+names[detail]:'✦ توليد '+names[detail],'generateOne','secondary',running?'disabled':'')}${detail==='reading'?`${button('A−','fontDown','ghost tiny')}${button('A+','fontUp','ghost tiny')}${button('إعادة الحجم','fontReset','ghost tiny')}${button('مش فاهم؟','explain','ghost')}`:''}</div><div id="section-container">${renderSection(l,detail)}</div>${l.generatedUsage?.[detail]?.totalTokens!=null?`<p class="fineprint">استهلاك التوليد: ${l.generatedUsage[detail].totalTokens} توكن (المدخلات ${l.generatedUsage[detail].promptTokens??"—"}، المخرجات ${l.generatedUsage[detail].outputTokens??"—"}).</p>`:""}`}
 function emptySection(name){return `<div class="empty"><div class="symbol">${({reading:'▤',interactive:'✦',lab:'⌁',quiz:'✓'})[detail]}</div><h3>محتوى ${name} لسه مش متولد</h3><p>اضغط «توليد ${name}» علشان تولّد الجزء ده فقط وتحفظه داخل الدرس.</p></div>`}
-function renderSection(l,key){const x=l.sections?.[key];if(!x)return emptySection(names[key]);if(key==='reading')return `${x.qualityWarnings?.length?`<div class="panel" style="margin-bottom:12px;border-color:#d8a53b"><b>تنبيه جودة الشرح:</b> ${x.qualityWarnings.map(esc).join(' — ')}. ده فحص آلي للطول والبنية، مش تدقيق علمي.</div>`:''}<article class="reader" style="--read-size:${db.fontSize||17}px"><h2>${esc(x.title||l.title)}</h2>${(x.blocks||[]).map(b=>`<section>${b.heading?`<h3>${esc(b.heading)}</h3>`:''}${(b.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${b.example?`<div class="callout">مثال: ${esc(b.example)}</div>`:''}</section>`).join('')}</article><div class="panel" style="margin-top:14px"><div class="section-title" style="margin:0 0 12px"><h2>شرح إضافي</h2></div>${(l.explanations||[]).map(e=>`<div class="note-card"><b>${esc(e.question)}</b><p>${esc(e.answer)}</p></div>`).join('')||'<p class="muted small">استخدم «مش فاهم؟» لتوليد شرح إضافي للجزئية اللي تحددها.</p>'}</div>`;if(key==='interactive')return interactiveSection(x,l);if(key==='lab')return labSection(x);if(key==='quiz'){const qs=x.questions||[];return `<div class="panel"><h2>${esc(x.title||'اختبار الدرس')}</h2><p class="muted">اختبر فهمك، وشوف تفسير كل إجابة بعد التصحيح.</p>${qs.map((q,i)=>`<section class="note-card" style="background:#f8f7fe"><b>${i+1}. ${esc(q.question)}</b><div>${(q.options||[]).map((o,k)=>`<button class="option ${quizSelection[i]===k?'selected':''}" data-quiz="${i}" data-choice="${k}">${esc(o)}</button>`).join('')}</div><p class="small" id="quiz-feedback-${i}" aria-live="polite"></p></section>`).join('')}${button('تصحيح الاختبار','gradeQuiz','full')}</div>`}return ''}
+function renderSection(l,key){const x=l.sections?.[key];if(!x)return emptySection(names[key]);if(key==='reading')return `${x.qualityWarnings?.length?`<div class="panel" style="margin-bottom:12px;border-color:#d8a53b"><b>تنبيه جودة الشرح:</b> ${x.qualityWarnings.map(esc).join(' — ')}. ده تنبيه آلي لا يضمن دقة الشرح العلمية.</div>`:''}<article class="reader" style="--read-size:${db.fontSize||17}px"><h2>${esc(x.title||l.title)}</h2>${(x.blocks||[]).map(b=>`<section>${b.heading?`<h3>${esc(b.heading)}</h3>`:''}${(b.paragraphs||[]).map(p=>`<p>${esc(p)}</p>`).join('')}${b.example?`<div class="callout">مثال: ${esc(b.example)}</div>`:''}</section>`).join('')}</article><div class="panel" style="margin-top:14px"><div class="section-title" style="margin:0 0 12px"><h2>شرح إضافي</h2></div>${(l.explanations||[]).map(e=>`<div class="note-card"><b>${esc(e.question)}</b><p>${esc(e.answer)}</p></div>`).join('')||'<p class="muted small">استخدم «مش فاهم؟» لتوليد شرح إضافي للجزئية اللي تحددها.</p>'}</div>`;if(key==='interactive')return interactiveSection(x,l);if(key==='lab')return labSection(x);if(key==='quiz'){const qs=x.questions||[];return `<div class="panel"><h2>${esc(x.title||'اختبار الدرس')}</h2><p class="muted">اختبر فهمك، وشوف تفسير كل إجابة بعد التصحيح.</p>${qs.map((q,i)=>`<section class="note-card" style="background:#f8f7fe"><b>${i+1}. ${esc(q.question)}</b><div>${(q.options||[]).map((o,k)=>`<button class="option ${quizSelection[i]===k?'selected':''}" data-quiz="${i}" data-choice="${k}">${esc(o)}</button>`).join('')}</div><p class="small" id="quiz-feedback-${i}" aria-live="polite"></p></section>`).join('')}${button('تصحيح الاختبار','gradeQuiz','full')}</div>`}return ''}
 function mathBidi(t){return `<bdi dir="ltr" class="math-inline">${esc(t)}</bdi>`}
 function taskResponse(t,i,l){const answer=l.activityAnswers?.[i];if(answer===undefined)return '';const right=Number(t.correctIndex||0);const ok=Number(answer)===right;return `<div class="activity-feedback ${ok?'good':'bad'}" aria-live="polite">${ok?'✓ صحيح':'↻ محتاج مراجعة'} — ${esc(t.feedback||'جرّب تحدد العلاقة بين المتغيرات من جديد.')}</div>`}
 function interactiveSection(x,l){if(x.kind==='generated_html'){
@@ -184,7 +184,7 @@ function promptFor(key,l,c){
  const base=`أنت مدرس جامعي متخصص في ${courseName}. اسم الطالب ميسي؛ نادِه باسمه بشكل طبيعي عند الحاجة، من غير تكرار. الشرح بالمصري الواضح والمصطلح الإنجليزي عند الحاجة مع تعريفه بالعربي، من غير حشو أو ترحيب متكرر.\nالمادة: ${courseName}\nالمحاضرة: ${lessonName}\n`;
  const integrity='الأولوية القصوى للدقة العلمية والتقنية. راجع داخليًا كل تعريف وقانون وأمر ومثال ونتيجته قبل الرد. لا تخمّن ولا تؤكد معلومة غير متيقن منها. فرّق بين التبسيط المفيد والحقيقة، ولا تستخدم تبسيطًا مضللًا. خليك داخل مستوى وهدف المادة؛ لا تتوسع في تخصصات أخرى إلا للضرورة. اشرح أي مصطلح جديد قبل استخدامه، أو اربطه بتعريف سبق شرحه بالفعل في نفس المحاضرة. التدرّج يكون من الأساسيات إلى الفهم العملي، مع توضيح كيف ولماذا، لا تعريفات متراكمة. افحص اتساق الأجزاء قبل إخراج JSON. ';
  switch(key){
- case 'reading':return base+integrity+'ابدأ بالمشكلة العملية التي يفسرها الدرس، وقدّم المفاهيم المطلوبة لفهمها بالتدريج. عرّف كل مصطلح قبل استخدامه، ثم اشرح العلاقة السببية وكيف تُستخدم الفكرة، مع تجربة أو مثال صحيح متدرج. لا تقفز للتفاصيل المتقدمة لمجرد إظهار العمق، ولا تُكرر التعريفات. تحقق من جميع الأمثلة البرمجية والخطوات: حالة البداية، الأمر، النتيجة الفعلية، وسببها. راجع اكتمال الأقسام واتساق الشرح قبل الرد. تجنب مقدمات الترحيب. لا تختصر المحاضرة إلى قاموس مصطلحات، ولا تفرض عدد كلمات ثابتًا؛ المطلوب فهم عملي متصل. أعد JSON فقط: {"title":"...","blocks":[{"heading":"...","paragraphs":["..."],"example":"مثال تطبيقي صحيح عند الحاجة"}],"concepts":["..."]}.';
+ case 'reading':return base+integrity+`المطلوب محاضرة تعليمية كاملة للتعلم الذاتي، وليست ملخصًا أو قاموس مصطلحات. اعتمد على عنوان المادة وعنوان المحاضرة في تحديد النطاق الدقيق. تصرف كمدرس يعلّم طالبًا يبدأ من الصفر: قدّم الفكرة التي تحل مشكلة حقيقية، ثم ابنِ كل مفهوم لازم لفهمها قبل استعماله، واشرح ماذا يحدث وكيف ولماذا، خطوة بخطوة وبالقدر المناسب للتخصص. لا تنتقل لمفهوم جديد قبل توضيح العلاقة بالمفهوم السابق. اعرض مثالًا تطبيقيًا متصلًا يبدأ بحالة أولية، ثم خطوات وتغييرات يمكن تتبعها، ثم نتائج صحيحة وسبب كل نتيجة؛ وأضف مثالًا ثانيًا مختلفًا يختبر حالة مهمة أو خطأ شائع. لو المادة برمجية، قدم أوامر أو شيفرة واقعية بترتيب تنفيذي صحيح، وبيّن الحالة قبل وبعد كل أمر مؤثر؛ ولو فيها قوانين، وضّح معنى الرموز والحسابات ووحداتها. لا تختلق تفاصيل أو نتائج غير مؤكدة، ولا تَخلِط الممارسات المستحسنة بالشروط التقنية الإلزامية. ارجع لأي أساس يحتاجه الفهم من غير حشو، ولا تتوسع في تخصص جانبي لا يخدم الدرس. لا تبدأ بتحية، ولا تتكرر في مخاطبة الطالب باسمه. يجب أن يخرج المتعلم بفهم يتيح له تطبيق الفكرة بنفسه، لا بحفظ تعريفاتها. اكتب أقسامًا مترابطة ذات فقرات تفسيرية كافية، واسمح بالتفصيل الضروري؛ لا تحاول اختصار الشرح لمجرد أن المخرجات JSON. راجع صحة الأمثلة وتسلسلها قبل الإخراج. JSON فقط بالشكل: {"title":"...","blocks":[{"heading":"...","paragraphs":["فقرة تفسيرية مكتملة","فقرة تالية عند الحاجة"],"example":"مثال متدرج صحيح ونتيجته"}],"concepts":["..."]}.`;
  case 'interactive':return base+integrity+'ولّد من 2 إلى 4 أنشطة تفاعلية متدرجة تخص موضوع المحاضرة، تتضمن التوقع/التجربة/اكتشاف الخطأ، وتصحيح فوري مفسّر بناءً على إجابة الطالب. أرجع JSON فقط: {"kind":"generated_html","title":"...","description":"...","html":"<div>...</div><script>...</script>"}. حقل html يحتوي HTML/CSS/JavaScript كاملين ومكتفيين ذاتيًا بدون أي مكتبة أو اتصال بالإنترنت. يجب أن توجد مدخلات فعلية، وتحقق من الإجابات بكتابة منطق JavaScript صحيح، مع تغذية راجعة فورية وتعليل. اختبر داخليًا الحلول وحالات الخطأ. الأنشطة متناسبة مع المستوى ولا تعتمد على مصطلح غير مؤسس. لو النشاط برمجي، اعرض كودًا واضحًا وتحقق من النواتج المتوقعة. لا تضع بيانات خارجية أو روابط ولا تستعمل fetch أو import أو أي طلب صلاحية.';
  case 'lab':{
   if(lab?.model==='electrostatic_charge_transfer')return base+integrity+'المحاكي التفاعلي المتاح للتنفيذ في التطبيق هو نقل الشحنة بين جسمين. أنشئ له عنوانًا ووصفًا علميين صحيحين وفق المحاضرة. JSON فقط: {"kind":"electrostatic_charge_transfer","title":"...","description":"..."}.';
@@ -198,29 +198,88 @@ function promptFor(key,l,c){
  }
 }
 function readingQualityWarnings(data){
+ // تنبيهات غير حاسمة؛ طول النص وعدد الأقسام لا يثبتان جودة الشرح علميًا.
  const blocks=data.blocks||[];
- const prose=blocks.map(b=>[...(b.paragraphs||[]),b.example||''].join(' ')).join(' ');
- const words=prose.trim().split(/\s+/).filter(Boolean).length;
  const warnings=[];
- if(blocks.length<3)warnings.push('الأقسام قليلة وقد يكون بناء الفهم ناقصًا');
- if(words<260)warnings.push('الشرح أقرب لملخص؛ لا يكفي عادةً لفهم محاضرة من الصفر');
- if(!blocks.some(b=>typeof b.example==='string'&&b.example.trim().length>=35))warnings.push('لا يوجد مثال تطبيقي واضح');
+ if(!blocks.some(b=>typeof b.example==='string'&&b.example.trim()))warnings.push('لا يوجد مثال تطبيقي واضح؛ راجع جودة الشرح');
  return warnings;
 }
 function ensureReadingComplete(data){
- const blocks=data.blocks||[];
- if(blocks.length<3)throw Error('الشرح رجع أقل من ثلاثة أقسام مترابطة؛ لم يُحفظ بدل الشرح القديم.');
- const prose=blocks.flatMap(b=>[...(b.paragraphs||[]),b.example||'']).join(' ');
- const words=prose.trim().split(/\s+/).filter(Boolean).length;
- if(words<210)throw Error('الشرح ناقص بشكل واضح (ملخص قصير)؛ لم يُحفظ بدل الشرح القديم.');
- if(!blocks.every(b=>typeof b.heading==='string'&&b.heading.trim()&&Array.isArray(b.paragraphs)&&b.paragraphs.some(p=>typeof p==='string'&&p.trim().length>40)))throw Error('أقسام الشرح فارغة أو غير مكتملة؛ لم تُحفظ.');
+ // يُرفض فقط المحتوى التالف بنيويًا؛ اكتمال الرد نفسه يُفحص عبر finishReason في gemini().
+ if(!Array.isArray(data.blocks)||!data.blocks.length)throw Error('Gemini رجّع شرحًا بلا أقسام. لم يُستبدل الشرح القديم.');
+ if(!data.blocks.every(b=>b&&typeof b==='object'&&!Array.isArray(b)&&typeof b.heading==='string'&&b.heading.trim()&&Array.isArray(b.paragraphs)&&b.paragraphs.length&&b.paragraphs.every(p=>typeof p==='string')&&b.paragraphs.some(p=>p.trim())))throw Error('أحد أقسام الشرح ناقص أو تالف. لم يُستبدل الشرح القديم.');
+ if(data.blocks.every(b=>!b.paragraphs.some(p=>p.trim().length>=15)))throw Error('الشرح خالٍ من فقرات مفهومة. لم يُستبدل الشرح القديم.');
 }
 function validateGeneratedHtml(data){
- if(typeof data.html!=='string'||data.html.length<450||data.html.length>75000||!/<(?:button|input|select|textarea)\b/i.test(data.html)||!/<script\b/i.test(data.html))throw Error('النشاط أو المختبر المولد لا يحتوي على عناصر تحكم ومنطق تشغيل كافيين');
- if(/<script\b[^>]*\bsrc\s*=|<iframe\b|<form\b|<base\b/i.test(data.html))throw Error('المحتوى المولد يحاول استعمال موارد أو عناصر غير مسموحة');
+ if(typeof data.html!=='string'||!data.html.trim()||data.html.length>75000)throw Error('ملف المختبر فارغ أو أكبر من الحد المدعوم');
+ if(!/<(?:button|input|select|textarea)\b/i.test(data.html)||!/<script\b/i.test(data.html))throw Error('المختبر لا يحتوي على مدخلات ومنطق تشغيل');
+ if(/<script\b[^>]*\bsrc\s*=|<iframe\b|<form\b|<base\b|<object\b|<embed\b|<meta\b[^>]*http-equiv|<link\b/i.test(data.html))throw Error('المحتوى المولد يحتوي على عناصر أو موارد خارجية غير مسموحة');
+ if(/<[a-z][^>]*\s+on[a-z]+\s*=|\b(?:src|href|action)\s*=\s*["']?\s*javascript\s*:/i.test(data.html))throw Error('المحتوى المولد يستعمل معالجات غير آمنة للأحداث');
+ if(!/<\/script\s*>/i.test(data.html))throw Error('كود JavaScript غير مكتمل');
 }
-function valid(key,data){if(!data||typeof data!=='object'||Array.isArray(data))throw Error('استجابة الموديل مش بالشكل المطلوب.');if(key==='reading'){if(!Array.isArray(data.blocks)||!data.blocks.length)throw Error('الشرح ناقص أقسام');ensureReadingComplete(data)}if(key==='interactive'){if(data.kind==='generated_html'){validateGeneratedHtml(data)}else{if(!Array.isArray(data.tasks)||!data.tasks.length)throw Error('الأنشطة ناقصة');for(const t of data.tasks){if(!['choice','error_spot','slider','order'].includes(t.type))throw Error('نوع نشاط غير مدعوم: '+t.type);if(['choice','error_spot'].includes(t.type)&&(!Array.isArray(t.choices)||t.choices.length<2||!Number.isInteger(t.correctIndex)||t.correctIndex<0||t.correctIndex>=t.choices.length))throw Error('اختيارات النشاط غير سليمة');if(t.type==='order'){const items=t.items||[],correct=t.correctOrder||[];if(!Array.isArray(items)||items.length<2||!Array.isArray(correct)||correct.length!==items.length||new Set(correct).size!==items.length||correct.some(v=>!Number.isInteger(v)||v<0||v>=items.length))throw Error('ترتيب خطوات النشاط مش صالح')}}}}if(key==='quiz'&&(!Array.isArray(data.questions)||!data.questions.length))throw Error('الاختبار ناقص');if(key==='lab'){if(!data.kind)throw Error('نوع المختبر مفقود');if(data.kind==='generated_html'){validateGeneratedHtml(data)}else if(!['electrostatic_charge_transfer','derivative_quadratic','function','none'].includes(data.kind))throw Error('نوع المختبر غير معروف')}}
-async function generateSection(key,fromBatch=false){const c=course(),l=lesson();if(!l){notify('اختار درس الأول');return false}if(!fromBatch){running=true;render()}try{const spec=promptFor(key,l,c);if(spec===null){notify("المختبر محدد في المنهج لكنه غير قابل للتشغيل في المحرك الحالي؛ لم نستهلك طلب Gemini.");return false}const data=await gemini(spec,key);valid(key,data);const usage=data._usage;if(key==='reading')data.qualityWarnings=readingQualityWarnings(data);l.sections=l.sections||{};l.sections[key]=data;l.generatedAt=l.generatedAt||{};l.generatedAt[key]=new Date().toISOString();l.generatedUsage=l.generatedUsage||{};l.generatedUsage[key]=usage;db.activity.push({kind:key,date:new Date().toISOString(),lessonId:l.id});save();notify(key==='reading'&&data.qualityWarnings?.length?`اتحفظ الشرح، ومعه ${data.qualityWarnings.length} ملاحظة جودة شكلية.`:`✓ تم توليد ${names[key]} وحفظه`);return true}catch(e){notify(`تعذر توليد ${names[key]}: ${e.message}`);return false}finally{if(!fromBatch){running=false;render()}}}
+function valid(key,data){
+ if(!data||typeof data!=='object'||Array.isArray(data))throw Error('استجابة الموديل مش بالشكل المطلوب.');
+ if(key==='reading'){
+  if(typeof data.title!=='string'||!data.title.trim())throw Error('عنوان الشرح ناقص');
+  ensureReadingComplete(data);
+  if(data.concepts!==undefined&&(!Array.isArray(data.concepts)||data.concepts.some(x=>typeof x!=='string')))throw Error('قائمة المفاهيم غير سليمة');
+ }
+ if(key==='interactive'){
+  if(data.kind==='generated_html'){validateGeneratedHtml(data)}
+  else{
+   if(!Array.isArray(data.tasks)||!data.tasks.length)throw Error('الأنشطة ناقصة');
+   for(const t of data.tasks){
+    if(!t||typeof t!=='object'||!['choice','error_spot','slider','order'].includes(t.type))throw Error('نوع نشاط غير مدعوم');
+    if(typeof t.question!=='string'||!t.question.trim())throw Error('سؤال النشاط ناقص');
+    if(['choice','error_spot'].includes(t.type)&&(!Array.isArray(t.choices)||t.choices.length<2||t.choices.some(x=>typeof x!=='string'||!x.trim())||!Number.isInteger(t.correctIndex)||t.correctIndex<0||t.correctIndex>=t.choices.length))throw Error('اختيارات النشاط أو إجابته غير سليمة');
+    if(t.type==='order'){
+     const items=t.items||[],correct=t.correctOrder||[];
+     if(!Array.isArray(items)||items.length<2||items.some(x=>typeof x!=='string'||!x.trim())||!Array.isArray(correct)||correct.length!==items.length||new Set(correct).size!==items.length||correct.some(v=>!Number.isInteger(v)||v<0||v>=items.length))throw Error('ترتيب خطوات النشاط مش صالح');
+    }
+    if(t.type==='slider'&&(!Number.isFinite(Number(t.min))||!Number.isFinite(Number(t.max))||Number(t.min)>=Number(t.max)||!Number.isFinite(Number(t.step))||Number(t.step)<=0))throw Error('قيم شريط النشاط غير صالحة');
+   }
+  }
+ }
+ if(key==='quiz'){
+  if(!Array.isArray(data.questions)||!data.questions.length)throw Error('الاختبار ناقص');
+  for(const [i,q] of data.questions.entries()){
+   if(!q||typeof q.question!=='string'||!q.question.trim()||!Array.isArray(q.options)||q.options.length<2||q.options.length>8||q.options.some(o=>typeof o!=='string'||!o.trim())||new Set(q.options.map(o=>o.trim())).size!==q.options.length||!Number.isInteger(q.correctIndex)||q.correctIndex<0||q.correctIndex>=q.options.length||typeof q.explanation!=='string'||!q.explanation.trim())throw Error(`السؤال ${i+1} ناقص اختيارًا صحيحًا أو تفسيرًا أو فيه خيارات متكررة`);
+  }
+ }
+ if(key==='lab'){
+  if(!data.kind)throw Error('نوع المختبر مفقود');
+  if(data.kind==='generated_html')validateGeneratedHtml(data);
+  else if(!['electrostatic_charge_transfer','derivative_quadratic','function','none'].includes(data.kind))throw Error('نوع المختبر غير معروف');
+  if(data.kind==='none'&&(!data.description||typeof data.description!=='string'))throw Error('سبب عدم الحاجة للمختبر ناقص');
+ }
+}
+// Smoke-test generated JavaScript in an opaque-origin iframe, NEVER in the app's own context.
+// This checks startup syntax/runtime errors, not scientific accuracy or every interaction path.
+async function validateGeneratedHtmlRuntime(html){
+ if(typeof document==='undefined'||typeof window==='undefined')throw Error('اختبار المتصفح غير متاح');
+ const token='probe-'+Math.random().toString(36).slice(2)+Date.now();
+ const pre=`<script>window.__labProbeErrors=[];addEventListener('error',function(e){window.__labProbeErrors.push(String(e.message||'JavaScript error'))});addEventListener('unhandledrejection',function(e){window.__labProbeErrors.push(String(e.reason||'Promise rejection'))});<\/script>`;
+ const post=`<script>setTimeout(function(){parent.postMessage({type:'v2-lab-probe',token:${JSON.stringify(token)},errors:window.__labProbeErrors||[],controls:document.querySelectorAll('button,input,select,textarea').length},'*')},160);<\/script>`;
+ const frame=document.createElement('iframe');
+ frame.setAttribute('sandbox','allow-scripts');frame.setAttribute('referrerpolicy','no-referrer');
+ frame.setAttribute('aria-hidden','true');frame.style.cssText='position:fixed;left:-10000px;top:0;width:800px;height:600px;opacity:0;pointer-events:none;';
+ const source=generatedLabDocument(pre+html+post);
+ return new Promise((resolve,reject)=>{
+  let done=false;
+  const cleanup=()=>{window.removeEventListener('message',received);clearTimeout(timer);frame.remove()};
+  const finish=(err)=>{if(done)return;done=true;cleanup();err?reject(err):resolve(true)};
+  const received=e=>{
+   if(e.source!==frame.contentWindow||e.data?.type!=='v2-lab-probe'||e.data.token!==token)return;
+   if(e.data.errors?.length)return finish(Error('JavaScript في المختبر لا يعمل: '+e.data.errors[0]));
+   if(!e.data.controls)return finish(Error('المختبر لا يحتوي على عنصر تحكم ظاهر'));
+   finish();
+  };
+  const timer=setTimeout(()=>finish(Error('تعذر اختبار تشغيل المختبر داخل الإطار المعزول')),4000);
+  window.addEventListener('message',received);
+  frame.srcdoc=source;document.body.appendChild(frame);
+ });
+}
+async function generateSection(key,fromBatch=false){const c=course(),l=lesson();if(!l){notify('اختار درس الأول');return false}if(!fromBatch){running=true;render()}try{const spec=promptFor(key,l,c);if(spec===null){notify("المختبر محدد في المنهج لكنه غير قابل للتشغيل في المحرك الحالي؛ لم نستهلك طلب Gemini.");return false}const data=await gemini(spec,key);valid(key,data);if(['interactive','lab'].includes(key)&&data.kind==='generated_html')await validateGeneratedHtmlRuntime(data.html);const usage=data._usage;if(key==='reading')data.qualityWarnings=readingQualityWarnings(data);l.sections=l.sections||{};l.sections[key]=data;l.generatedAt=l.generatedAt||{};l.generatedAt[key]=new Date().toISOString();l.generatedUsage=l.generatedUsage||{};l.generatedUsage[key]=usage;db.activity.push({kind:key,date:new Date().toISOString(),lessonId:l.id});save();notify(key==='reading'&&data.qualityWarnings?.length?`اتحفظ الشرح، ومعه ${data.qualityWarnings.length} ملاحظة جودة شكلية.`:`✓ تم توليد ${names[key]} وحفظه`);return true}catch(e){notify(`تعذر توليد ${names[key]}: ${e.message}`);return false}finally{if(!fromBatch){running=false;render()}}}
 async function generateAll(){if(running)return;running=true;render();const l=lesson();if(!l){running=false;render();return}let ok=0;for(const key of ['reading','interactive','lab','quiz']){if(l.sections?.[key])continue;const result=await generateSection(key,true);if(result)ok++;else{if(!confirm(`فشل توليد ${names[key]}. هل تريد متابعة بقية أجزاء الدرس؟`))break}}running=false;render();notify(`اكتمل توليد ${ok} أجزاء جديدة. كل جزء ناجح محفوظ مستقل.`)}
 async function explain(){const l=lesson();if(!l||!l.sections?.reading){notify('ولّد الشرح أولًا');return}const selection=window.getSelection()?.toString().trim().slice(0,1000)||'';const q=prompt('اكتب النقطة اللي مش فاهمها، أو ظلّل نص الشرح ثم اضغط الزر',selection);if(!q?.trim())return;running=true;render();try{const x=await gemini(`اشرح النقطة التالية من الصفر شرحًا علميًا دقيقًا باللهجة المصرية، بتشبيه ثم مثال محلول ثم تطبيق، في درس ${l.title}. السؤال: ${q}. الرد JSON فقط: {"answer":"شرح تفصيلي متعدد الفقرات"}`);if(!x.answer)throw Error('الشرح الإضافي ناقص');l.explanations=l.explanations||[];l.explanations.push({question:q,answer:x.answer,date:new Date().toISOString()});save();notify('تم حفظ الشرح الإضافي تحت المحاضرة')}catch(e){notify(e.message)}finally{running=false;render()}}
 function exportData(){const blob=new Blob([JSON.stringify({...db,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='cs-bachelors-v2-backup.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('تم تصدير نسخة احتياطية')}
